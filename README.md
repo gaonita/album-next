@@ -1,4 +1,4 @@
-#Display Photo Albums 📷
+# Display Photo Albums 📷
 ## Getting Started
 
 ```bash
@@ -9,16 +9,16 @@ next build
 next start
 ```
 
-##Techniques
+## Techniques
 - This is a [Next.js](https://nextjs.org/) project bootstrapped with `create-next-app`.
 
-##Design
-- ###Photo Preview
+## Design
+- ### Photo Preview
   - 🧭 Navigate images with buttons or keyboard arrows 
   - 🏃🏻‍️ Close the preview with escape key 
   - 📍 Image index indicator 
 
-##Resources
+## Resources
 - Using data from [JSONPlacehoder API](https://jsonplaceholder.typicode.com/).
 - Icons are downloaded from [Font Awesome](https://fontawesome.com/).
 - Using [Bootstrap](https://getbootstrap.com/) for the layout and breadcrumbs.
