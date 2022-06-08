@@ -1,50 +1,6 @@
-.container {
-    padding: 0 2rem;
-}
-
-.divider{
-    border-top: 3px solid grey;
-}
-.userCard {
-    border-radius: 4px;
-    max-width: 22rem;
-    margin: 16px;
-    border: none;
-    color: #074083;
-    background: #c6ddf6;
-}
-
-.userName {
-    margin: 0;
-    font-size: 1.2rem;
-    font-weight: bold
-}
-
-.userName:hover {
-    text-decoration: underline;
-    cursor: pointer;
-}
-
-.star {
-    background: transparent;
-    border: none;
-}
-
-.star:hover {
-    transform: scale(1.1);
-}
-
-.albumName{
-    margin: 0;
-    font-size: 1.2rem;
-    color: #074083;
-}
-
-.albumName:hover {
-    text-decoration: underline;
-    cursor: pointer;
-}
-
-.photo:hover{
-    cursor: pointer;
+.usersContainer {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }

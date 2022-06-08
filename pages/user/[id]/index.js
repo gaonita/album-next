@@ -1,39 +1,29 @@
 import {getUsersWithAlbums} from "../../api/api";
-import Link from "next/link";
-import Layout from "../../../components/Layout";
-import AlbumCard from "../../../components/AlbumCard";
+import Layout from "../../../components/Layout/Layout";
+import AlbumCard from "../../../components/AlbumCard/AlbumCard";
+import UserDetailInfo from "../../../components/UserDetailInfo/UserDetailInfo";
 
 export default function UserDetail({user}) {
+    const pathArray = [{path: '/', label: 'User'}, {path: `/user/${user?.id}`, label: `${user?.name}`}];
     return (
         user &&
-        <Layout pathArray={[{path: '/', label: 'User'}, {path: `/user/${user.id}`, label: `${user.name}`}]}>
-            <div style={{display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center',margin:'80px 0'}}>
-                <h1 style={{fontWeight:'bold'}}>{user.name}</h1>
-                <div style={{maxWidth:'50rem', margin:16, display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
-                    <p style={{margin:10}}>{user.company.name}</p>
-                    <hr style={{width:30, margin:10, borderTop:'1px solid black'}}/>
-                    <p style={{margin:10}}>{user.email}</p>
-                    <hr style={{width:30,margin:10,borderTop:'1px solid black'}}/>
-                    <p style={{margin:10}}>{user.address.street}, {user.address.city} </p>
-                </div>
-            </div>
+        <Layout pathArray={pathArray}>
+            <UserDetailInfo user={user}/>
             <h1>Albums</h1>
-            <div className="row" style={{marginBottom: 60}}>
+            <div className="row">
                 {
                     user.albums.map((a, i) =>
                         <AlbumCard key={i}
                                    path={`/user/${user.id}/album/${a.id}`}
-                                   prop={a}/>
+                                   album={a}/>
                     )}
             </div>
         </Layout>
     )
 }
 
-
 export async function getStaticProps({params}) {
     const allUsers = await getUsersWithAlbums() || []
-
     const userIdInt = parseInt(params.id)
 
     return {

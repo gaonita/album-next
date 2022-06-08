@@ -1,15 +1,22 @@
-import {getUsersWithAlbums} from "../../../api/api";
-import Image from "next/image";
 import React, {useCallback, useEffect, useState} from "react";
-import Layout from "../../../../components/Layout";
-import styles from '../../../../styles/Home.module.css'
-import Photo from "../../../../components/Photo";
-import closeIcon from "../../../../assets/close.svg";
-import arrowLeft from "../../../../assets/arrowLeft.svg"
-import arrowRight from "../../../../assets/arrowRight.svg"
+import {getUsersWithAlbums} from "../../../api/api";
+import Layout from "../../../../components/Layout/Layout";
+import Photo from "../../../../components/Photo/Photo";
+import styles from './albumDetail.module.css'
+import PhotoPreview from "../../../../components/PhotoPreview/PhotoPreview";
+
+const AlbumDetailHeader = ({title, length}) => (
+    <div className={styles.albumDetail}>
+        <h1>{title}</h1>
+        <p className={styles.albumLengthText}>{length} photos</p>
+    </div>
+)
 
 export default function AlbumDetail({user, album}) {
-
+    const pathArray = [{path: '/', label: 'User'},
+        {path: `/user/${user?.id}`, label: `${user?.name}`},
+        {path: `/user/${user?.id}/album/${album?.id}`, label: `${album?.title}`}]
+    const totalPhotos = album?.photos.length;
     const [currentPhotoIndex, setCurrentPhotoIndex] = useState(-1)
 
     const onClickPhoto = (photoIndex) => {
@@ -26,22 +33,22 @@ export default function AlbumDetail({user, album}) {
             if (prev > 0) {
                 return prev - 1
             } else {
-                alert('first photo')
-                return prev
+                setCurrentPhotoIndex(totalPhotos - 1)
+                return currentPhotoIndex
             }
         })
-    }, [])
+    }, [currentPhotoIndex, totalPhotos])
 
     const moveToNext = useCallback(() => {
         setCurrentPhotoIndex(prev => {
-            if (prev < album.photos.length - 1) {
+            if (prev < totalPhotos - 1) {
                 return prev + 1
             } else {
-                alert('last photo')
-                return prev
+                setCurrentPhotoIndex(0)
+                return currentPhotoIndex
             }
         })
-    }, [album?.photos.length])
+    }, [currentPhotoIndex, totalPhotos])
 
     useEffect(() => {
         window.onkeydown = (event) => {
@@ -51,6 +58,9 @@ export default function AlbumDetail({user, album}) {
                     break;
                 case "ArrowLeft":
                     moveToPrevious();
+                    break;
+                case "Escape":
+                    onClose();
                     break;
                 default:
                     break;
@@ -63,78 +73,32 @@ export default function AlbumDetail({user, album}) {
 
     return (
         user && album &&
-        <Layout pathArray={[{path: '/', label: 'User'}, {
-            path: `/user/${user.id}`,
-            label: `${user.name}`
-        }, {path: `/user/${user.id}/album/${album.id}`, label: `${album.title}`}]}>
-
-            <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-                margin: '80px 0'
-            }}>
-                <h1>{album.title}</h1>
-                <p>{album.photos.length} photos</p>
-            </div>
-            <div style={{
-                display: currentPhotoIndex !== -1 ? "flex" : "none",
-                flexDirection: 'column',
-                position: 'fixed',
-                width: '100%',
-                height: '100%',
-                top: 0,
-                left: 0,
-                background: 'rgba(0,0,0,0.8)',
-                zIndex: 1,
-
-            }}>
-                <div style={{
-                    padding: 36,
-                    alignSelf: 'flex-end',
-                    zIndex: 2
-                }}
-                     onClick={onClose}>
-                    <Image src={closeIcon} alt={`photo`} width={36} height={36}
-                           style={{cursor: 'pointer'}}/>
+        <Layout pathArray={pathArray}>
+            <AlbumDetailHeader title={album.title}
+                               length={totalPhotos}/>
+            {
+                currentPhotoIndex !== -1 &&
+                <PhotoPreview currentPhotoIndex={currentPhotoIndex}
+                              onClose={onClose}
+                              totalPhotos={totalPhotos}
+                              moveToPrevious={moveToPrevious}
+                              moveToNext={moveToNext}/>
+            }
+                <div className={styles.photosContainer}>
+                    {
+                        album.photos.map((p, i) =>
+                            <Photo
+                                key={p.id}
+                                photo={p}
+                                index={i}
+                                open={currentPhotoIndex === i}
+                                onClick={() => onClickPhoto(i)}/>
+                        )
+                    }
                 </div>
-                <div style={{
-                    width: '100%',
-                    height: '100%',
-                    display: 'flex',
-                    justifyContent: 'space-around',
-                    alignItems: 'center',
-                    position: 'absolute'
-                }}>
-
-                    <div style={{cursor: 'pointer'}}
-                         onClick={moveToPrevious}>
-                        <Image src={arrowLeft} alt={'left'} width={50} height={50}/>
-                    </div>
-
-                    <div style={{cursor: 'pointer'}}
-                         onClick={moveToNext}><Image src={arrowRight} alt={'left'} width={50} height={50}/>
-                    </div>
-                </div>
-            </div>
-            <div style={{display: "flex", alignItems: 'center', flexWrap: 'wrap'}}>
-
-                {
-                    album.photos.map((p, i) =>
-                        <Photo
-                            key={p.id}
-                            photo={p}
-                            open={currentPhotoIndex === i}
-                            onClick={() => onClickPhoto(i)}/>
-                    )
-                }
-
-            </div>
         </Layout>
     )
 }
-
 
 export async function getStaticProps({params}) {
     const allUsers = await getUsersWithAlbums() || []
@@ -154,4 +118,3 @@ export async function getStaticPaths() {
         fallback: true,
     }
 }
-

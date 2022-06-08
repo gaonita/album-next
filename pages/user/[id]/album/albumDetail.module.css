@@ -1,0 +1,17 @@
+.albumDetail {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 80px 0;
+}
+
+.albumLengthText {
+    font-style: italic;
+}
+
+.photosContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}

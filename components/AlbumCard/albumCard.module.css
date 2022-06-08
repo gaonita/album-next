@@ -1,0 +1,32 @@
+
+.albumCard {
+    max-width: 22rem;
+    margin: 16px;
+    padding: 20px;
+    border: none;
+    background: #c6ddf6;
+    border-radius: 4px;
+}
+
+.albumName {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #074083;
+}
+
+.albumName:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.albumDetail {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 80px 0;
+}
+
+.albumLengthText {
+    font-style: italic;
+}

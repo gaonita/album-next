@@ -1,0 +1,22 @@
+.arrowsContainer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width:  100%;
+    height: 100%;
+    position: absolute;
+    z-index: 2;
+}
+.arrowButton {
+    display: flex;
+    cursor: pointer;
+    z-index: 3;
+    margin:0 16px;
+}
+
+.photosContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}

@@ -1,53 +1,35 @@
 import Head from 'next/head'
 import {getUsersWithAlbums} from "./api/api"
-import Card from "../components/UserCard";
 import styles from '../styles/Home.module.css'
-import Layout from "../components/Layout";
-import {useState} from "react";
+import Layout from "../components/Layout/Layout";
+import useStorage from "../hooks/storage";
+import Users from "../components/Users/Users";
+
+const PageHead = () => (
+    <Head>
+        <title>Gaon Yang</title>
+        <meta name="description" content="photo albums"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="icon" href="/favicon.ico"/>
+    </Head>
+)
 
 export default function Home({allUsers}) {
-    const [favorites, setFavorites] = useState([])
-    const [userList, setUserList] = useState(allUsers)
-
+    const pathArray = [{path: '/', label: 'User'}]
+    const [favorites, storeData] = useStorage('favoriteList', [])
     return (
-        <Layout pathArray={[{path: '/', label: 'User'}]}>
-            <Head>
-                <title>Gaon Yang</title>
-                <meta name="description" content="photo albums"/>
-                <meta name="viewport" content="width=device-width, initial-scale=1"/>
-                <link rel="icon" href="/favicon.ico"/>
-            </Head>
+        <Layout pathArray={pathArray}>
+            <PageHead/>
+            <div className={styles.usersContainer}>
+                <Users title='Favorites'
+                       favorite={true}
+                       userList={allUsers.filter(u => favorites.includes(u.id))}
+                       onClickStar={(u) => storeData(favorites.filter(i => u.id !== i))}/>
 
-            <div>
-                <h1>Favorites</h1>
-                <hr className={styles.divider}/>
-                <div className="row" style={{marginBottom: 60}}>
-                    {favorites.map((u, i) =>
-                        <Card onClickStar={() => {
-                            setUserList([...userList, u])
-                            setFavorites(favorites.filter(user => user.id !== u.id))
-                        }}
-                              favorite={true}
-                              key={i}
-                              path={`/user/${u.id}`}
-                              user={u}/>
-                    )}
-                </div>
-
-                <h1>Users</h1>
-                <hr className={styles.divider}/>
-                <div className="row align-items-start">
-                    {userList.map((u, i) =>
-                        <Card onClickStar={() => {
-                            setFavorites([...favorites, u])
-                            setUserList(userList.filter(user => user.id !== u.id))
-                        }}
-                              favorite={false}
-                              key={i}
-                              path={`/user/${u.id}`}
-                              user={u}/>
-                    )}
-                </div>
+                <Users title='Users'
+                       favorite={false}
+                       userList={allUsers.filter(u => !favorites.includes(u.id))}
+                       onClickStar={(u) => storeData([...favorites, allUsers.find(user => user.id === u.id).id])}/>
             </div>
         </Layout>
     )

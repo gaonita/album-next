@@ -1,0 +1,43 @@
+.userCard {
+    border-radius: 4px;
+    max-width: 22rem;
+    margin: 16px;
+    border: none;
+    color: #074083;
+    background: #c6ddf6;
+}
+
+.NameContainer {
+    display: flex;
+    padding: 16px 4px 0;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.userName {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: bold
+}
+
+.userName:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.star {
+    background: transparent;
+    border: none;
+}
+
+.star:hover {
+    transform: scale(1.1);
+}
+
+.userInfoContainer {
+    padding: 0 4px 16px;
+}
+
+.userInfo {
+    margin: 0;
+}
