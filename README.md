@@ -2,11 +2,14 @@
 ## Getting Started
 
 ```bash
+#to install, run
+npm install
+
 #to build, run
-next build
+npm run build
 
 #and to start the server, run
-next start
+npm run start
 ```
 
 ## Techniques
