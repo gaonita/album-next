@@ -1,25 +1,16 @@
-import Head from 'next/head'
 import {getUsersWithAlbums} from "./api/api"
 import styles from '../styles/Home.module.css'
+import PageHead from "../components/PageHead/PageHead";
 import Layout from "../components/Layout/Layout";
 import Users from "../components/Users/Users";
 import useStorage from "../hooks/storage";
-
-const PageHead = () => (
-    <Head>
-        <title>Gaon Yang</title>
-        <meta name="description" content="photo albums"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <link rel="icon" href="/favicon.ico"/>
-    </Head>
-)
 
 export default function Home({allUsers}) {
     const pathArray = [{path: '/', label: 'User'}]
     const [favorites, storeData] = useStorage('favoriteList', [])
     return (
         <Layout pathArray={pathArray}>
-            <PageHead/>
+            <PageHead page={'Users'}/>
             <div className={styles.usersContainer}>
                 <Users title='Favorites'
                        favorite={true}

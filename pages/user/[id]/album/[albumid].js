@@ -4,6 +4,7 @@ import Layout from "../../../../components/Layout/Layout";
 import Photo from "../../../../components/Photo/Photo";
 import styles from './albumDetail.module.css'
 import PhotoPreview from "../../../../components/PhotoPreview/PhotoPreview";
+import PageHead from "../../../../components/PageHead/PageHead";
 
 const AlbumDetailHeader = ({title, length}) => (
     <div className={styles.albumDetail}>
@@ -74,6 +75,7 @@ export default function AlbumDetail({user, album}) {
     return (
         user && album &&
         <Layout pathArray={pathArray}>
+            <PageHead page={'Album Detail'}/>
             <AlbumDetailHeader title={album.title}
                                length={totalPhotos}/>
             {

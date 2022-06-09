@@ -1,13 +1,16 @@
 import {getUsersWithAlbums} from "../../api/api";
+import PageHead from "../../../components/PageHead/PageHead";
 import Layout from "../../../components/Layout/Layout";
 import AlbumCard from "../../../components/AlbumCard/AlbumCard";
 import UserDetailInfo from "../../../components/UserDetailInfo/UserDetailInfo";
+
 
 export default function UserDetail({user}) {
     const pathArray = [{path: '/', label: 'User'}, {path: `/user/${user?.id}`, label: `${user?.name}`}];
     return (
         user &&
         <Layout pathArray={pathArray}>
+            <PageHead page={'User Detail'}/>
             <UserDetailInfo user={user}/>
             <h1>Albums</h1>
             <div className="row">
