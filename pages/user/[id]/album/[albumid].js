@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {getUsersWithAlbums} from "../../../api/api";
 import Layout from "../../../../components/Layout/Layout";
 import Photo from "../../../../components/Photo/Photo";

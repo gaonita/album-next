@@ -2,8 +2,8 @@ import Head from 'next/head'
 import {getUsersWithAlbums} from "./api/api"
 import styles from '../styles/Home.module.css'
 import Layout from "../components/Layout/Layout";
-import useStorage from "../hooks/storage";
 import Users from "../components/Users/Users";
+import useStorage from "../hooks/storage";
 
 const PageHead = () => (
     <Head>

@@ -1,4 +1,7 @@
 # Display Photo Albums 📷
+
+### Try live demo 📍[Here]( https://album-next.vercel.app/)
+
 ## Getting Started
 
 ```bash
@@ -19,7 +22,7 @@ npm run start
 - ### Photo Preview
   - 🧭 Navigate images with buttons or keyboard arrows 
   - 🏃🏻‍️ Close the preview with escape key 
-  - 📍 Image index indicator 
+  - 📎 Image index indicator 
 
 ## Resources
 - Using data from [JSONPlacehoder API](https://jsonplaceholder.typicode.com/).
