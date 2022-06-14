@@ -41,6 +41,11 @@ export async function getStaticPaths() {
 
     return {
         paths: allUsers?.map((u) => `/user/${u.id}`) || [],
-        fallback: true,
+        fallback: false,
     }
 }
+// If fallback is false, then any paths not returned by getStaticPaths will result in a 404 page.
+//fallback: true is useful if your app has a very large number of static pages that depend on data (such as a very large e-commerce site).
+// If you want to pre-render all product pages, the builds would take a very long time.
+// Instead, you may statically generate a small subset of pages and use fallback: true for the rest.
+// When someone requests a page that is not generated yet, the user will see the page with a loading indicator or skeleton component.

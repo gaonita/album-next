@@ -4,10 +4,12 @@ import PageHead from "../components/PageHead/PageHead";
 import Layout from "../components/Layout/Layout";
 import Users from "../components/Users/Users";
 import useStorage from "../hooks/storage";
+import {useMemo} from "react";
 
 export default function Home({allUsers}) {
     const pathArray = [{path: '/', label: 'User'}]
-    const [favorites, storeData] = useStorage('favoriteList', [])
+    const defaultValue = useMemo(() => [], []);
+    const [favorites, storeData] = useStorage('favoriteList', defaultValue)
     return (
         <Layout pathArray={pathArray}>
             <PageHead page={'Users'}/>
