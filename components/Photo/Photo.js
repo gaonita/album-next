@@ -1,24 +1,24 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import Image from "next/image";
 import styles from "./photo.module.css"
+import {AppContext} from "../../pages/_app";
 
-export default function Photo({photo,index, open, onClick}) {
+export default function Photo({photo, open, onClick}) {
+    const {windowWidth, windowHeight} = useContext(AppContext)
+
     useEffect(() => {
         if (open) {
             const rect = photoRef.current.getBoundingClientRect()
-            const x = rect.x + rect.width / 2;
-            const y = rect.y + rect.height / 2;
-            setMoveToX(window.innerWidth / 2 - x);
-            setMoveToY(window.innerHeight / 2 - y);
+            const x = photoRef.current.offsetLeft + photoRef.current.clientWidth / 2;
+            const y = photoRef.current.offsetTop + photoRef.current.clientHeight / 2;
+            setTransform(`translate(${windowWidth / 2 - x}px, ${windowHeight / 2 - y}px) scale(${open ? 2 : 1})`)
         } else {
-            setMoveToX(0);
-            setMoveToY(0);
+            setTransform(`translate(0px,0px)`)
         }
-    }, [open])
+    }, [open, windowWidth, windowHeight])
 
-    const photoRef = useRef();
-    const [moveToX, setMoveToX] = useState(0)
-    const [moveToY, setMoveToY] = useState(0)
+    const photoRef = useRef()
+    const [transform, setTransform] = useState()
 
     return (
         photo&&
@@ -26,7 +26,7 @@ export default function Photo({photo,index, open, onClick}) {
              ref={photoRef}
              onClick={onClick}
              style={{
-                 transform: `translate(${moveToX}px, ${moveToY}px) scale(${open ? 2 : 1})`,
+                 transform: transform,
                  zIndex: open ? 2 : 0,
              }}>
 

@@ -14,11 +14,14 @@ export async function fetchAPI(path) {
 }
 
 export async function getUsersWithAlbums() {
-
+// expensive; fetching data before you need, so loading time can be taking long
+// to manipulate data structure like this!
+// but nextJS does it in build time so end user wouldn't get affected.
     const users = await fetchAPI('users')
     const albums = await fetchAPI('albums')
     const photos = await fetchAPI('photos')
-
+//to create path, need infos
+//used in many pages, efficient to calculate once here => same function everywhere same data structure
     return users.map(u => ({
         ...u,
         albums: albums.filter(a => a.userId === u.id).map(a => ({

@@ -5,7 +5,7 @@ export default function useStorage(key, defaultValue) {
 
     useEffect(() => {
         setData(JSON.parse(localStorage.getItem(key)) || defaultValue)
-    }, [key])
+    }, [key, defaultValue])
 
     const storeData = useCallback((newData) => {
         localStorage.setItem(key, JSON.stringify(newData));
